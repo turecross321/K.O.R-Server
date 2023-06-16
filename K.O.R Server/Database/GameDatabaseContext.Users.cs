@@ -50,6 +50,22 @@ public partial class GameDatabaseContext
         });
     }
     
+    public void SetUserSelectedSkin(GameUser user, int selectedSkin)
+    {
+        _realm.Write(() =>
+        {
+            user.SelectedSkin = selectedSkin;
+        });
+    }
+    
+    public void SetUserStatistics(GameUser user, UserStatistics statistics)
+    {
+        _realm.Write(() =>
+        {
+            user.Statistics = statistics;
+        });
+    }
+    
     private const int WorkFactor = 10;
     public bool ValidatePassword(GameUser user, string hash)
     {
@@ -73,7 +89,7 @@ public partial class GameDatabaseContext
     
     public GameUser? GetUserWithEmail(string email)
     {
-        return _realm.All<GameUser>().FirstOrDefault(u => u.Email == email);
+        return _realm.All<GameUser>().FirstOrDefault(u => u.Email == email.ToLower());
     }
     
     public GameUser? GetUserWithId(string id)

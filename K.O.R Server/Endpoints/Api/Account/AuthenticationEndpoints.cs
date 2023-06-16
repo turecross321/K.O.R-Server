@@ -26,4 +26,11 @@ public class AuthenticationEndpoints : EndpointGroup
         GameSession session = database.CreateSession(user, SessionType.Api);
         return new Response(new SessionResponse(session), ContentType.Json, HttpStatusCode.Created);
     }
+
+    [ApiEndpoint("account/logOut", Method.Post)]
+    public Response LogOut(RequestContext context, GameDatabaseContext database, GameSession token)
+    {
+        database.RemoveSession(token);
+        return HttpStatusCode.OK;
+    }
 }

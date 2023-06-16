@@ -60,7 +60,7 @@ public class GameServer
     
     protected virtual void SetUpServices()
     {
-        ServerInstance.AddRateLimitService(new RateLimitSettings(30, 10, 0));
+        ServerInstance.AddRateLimitService(new RateLimitSettings(30, 40, 0));
         ServerInstance.AddService<EmailService>();
     }
 

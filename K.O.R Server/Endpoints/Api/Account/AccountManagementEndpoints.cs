@@ -15,7 +15,7 @@ namespace K.O.R_Server.Endpoints.Api.Account;
 
 public partial class AccountManagementEndpoints : EndpointGroup
 {
-    [System.Text.RegularExpressions.GeneratedRegex("^[a-f0-9]{128}$")]
+    [System.Text.RegularExpressions.GeneratedRegex("^[a-fA-F0-9]{128}$")]
     private static partial System.Text.RegularExpressions.Regex Sha512Regex();
 
     [ApiEndpoint("account/register", Method.Post, ContentType.Json)]
@@ -31,9 +31,20 @@ public partial class AccountManagementEndpoints : EndpointGroup
         if (user != null)
             return new Response("Email is already in use.", ContentType.Plaintext, HttpStatusCode.Conflict);
         
-        if (body.PasswordSha512.Length != 128 || !Sha512Regex().IsMatch(body.PasswordSha512))
+        // Check if password is valid SHA512
+        if (!Sha512Regex().IsMatch(body.PasswordSha512))
             return new Response("Password is definitely not SHA512. Please hash the password.",
                 ContentType.Plaintext, HttpStatusCode.BadRequest);
+
+        // Check if username contains to rules
+        if (!UserHelper.IsUsernameLegal(body.Username))
+            return new Response("Username is not allowed.", ContentType.Plaintext, HttpStatusCode.Conflict);
+        
+        // Check if username is already taken
+        user = database.GetUserWithUsername(body.Username);
+        if (user != null)
+            return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.Conflict);
+            
 
         database.CreateUser(body);
         return HttpStatusCode.Created;
@@ -42,7 +53,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
     [ApiEndpoint("account/setUsername", Method.Post)]
     public Response SetUsername(RequestContext context, GameDatabaseContext database, GameUser user, SetUsernameRequest body)
     {
-        if (!UserHelper.IsUsernameLegal(body.NewUsername)) return new Response("Not a valid username.", ContentType.Plaintext, HttpStatusCode.BadRequest);
+        if (!UserHelper.IsUsernameLegal(body.NewUsername)) return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.BadRequest);
         
         GameUser? userWithNewName = database.GetUserWithUsername(body.NewUsername);
         if (userWithNewName != null)
