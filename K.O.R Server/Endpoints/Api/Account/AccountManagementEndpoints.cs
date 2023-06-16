@@ -36,7 +36,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
             return new Response("Password is definitely not SHA512. Please hash the password.",
                 ContentType.Plaintext, HttpStatusCode.BadRequest);
 
-        // Check if username contains to rules
+        // Check if username adheres to rules
         if (!UserHelper.IsUsernameLegal(body.Username))
             return new Response("Username is not allowed.", ContentType.Plaintext, HttpStatusCode.Conflict);
         
@@ -50,7 +50,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setUsername", Method.Post)]
+    [ApiEndpoint("account/setUsername", Method.Post, ContentType.Json)]
     public Response SetUsername(RequestContext context, GameDatabaseContext database, GameUser user, SetUsernameRequest body)
     {
         if (!UserHelper.IsUsernameLegal(body.NewUsername)) return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.BadRequest);
@@ -65,8 +65,8 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendEmailSession", Method.Post)]
-    public Response SendEmailSession(RequestContext context, GameDatabaseContext database, GameUser user, NewEmailRequest body, EmailService emailService)
+    [ApiEndpoint("account/sendEmailSession", Method.Post, ContentType.Json)]
+    public Response SendEmailSession(RequestContext context, GameDatabaseContext database, GameUser user, EmailService emailService)
     {
         string emailSessionId = GenerateEmailSessionId(database);
         GameSession emailSession = database.CreateSession(user, SessionType.SetEmail, 600, emailSessionId); // 10 minutes
@@ -74,12 +74,12 @@ public partial class AccountManagementEndpoints : EndpointGroup
         string emailBody = $"Dear {user.Username},\n\n" +
                            "Here is your new email code: " + emailSession.Id + "\n" +
                            "If this wasn't you, change your password immediately. Code expires in 10 minutes.";
-        emailService.SendEmail(body.NewEmail, "K.O.R New Email Code", emailBody);
+        emailService.SendEmail(user.Email, "K.O.R New Email Code", emailBody);
 
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setEmail", Method.Post)]
+    [ApiEndpoint("account/setEmail", Method.Post, ContentType.Json)]
     public Response SetUserEmail(RequestContext context, GameDatabaseContext database, NewEmailRequest body, GameSession session, EmailService emailService)
     {
         GameUser user = session.User;
@@ -99,7 +99,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendPasswordSession", Method.Post)]
+    [ApiEndpoint("account/sendPasswordSession", Method.Post, ContentType.Json)]
     [Authentication(false)]
     public Response SendPasswordSession(RequestContext context, GameDatabaseContext database, NewPasswordSessionRequest body, EmailService emailService)
     {
@@ -118,8 +118,8 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setPassword", Method.Post)]
-    public Response SetUserPassword(RequestContext context, GameDatabaseContext database, NewPasswordRequest body, GameSession session)
+    [ApiEndpoint("account/setPassword", Method.Post, ContentType.Json)]
+    public Response SetUserPassword(RequestContext context, GameDatabaseContext database, SetPasswordRequest body, GameSession session)
     {
         GameUser user = session.User;
 
