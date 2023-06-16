@@ -1,5 +1,4 @@
-﻿using System;
-using Bunkum.HttpServer.Authentication;
+﻿using Bunkum.HttpServer.Authentication;
 using Realms;
 #pragma warning disable CS8618
 

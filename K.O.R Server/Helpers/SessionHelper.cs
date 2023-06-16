@@ -1,5 +1,4 @@
-﻿using System;
-using K.O.R_Server.Database;
+﻿using K.O.R_Server.Database;
 using K.O.R_Server.Endpoints;
 using K.O.R_Server.Types;
 

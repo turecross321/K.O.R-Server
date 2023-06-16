@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using System.Threading.Tasks;
 using Bunkum.CustomHttpListener;
 using Bunkum.HttpServer;
 using Bunkum.HttpServer.Authentication;

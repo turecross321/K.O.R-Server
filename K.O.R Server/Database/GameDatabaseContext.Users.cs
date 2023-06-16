@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using K.O.R_Server.Requests.Account;
+﻿using K.O.R_Server.Requests.Account;
 using K.O.R_Server.Types;
-using MongoDB.Bson;
 
 namespace K.O.R_Server.Database;
 
@@ -12,10 +9,12 @@ public partial class GameDatabaseContext
     {
         GameUser user = new()
         {
+            Id = GenerateGuid(),
             Username = request.Username,
             Email = request.Email,
             PasswordBcrypt = BCrypt.Net.BCrypt.HashPassword(request.PasswordSha512.ToLower(), WorkFactor),
             CreationDate = DateTimeOffset.UtcNow,
+            Statistics = new UserStatistics()
         };
 
         _realm.Write(() =>
@@ -77,7 +76,7 @@ public partial class GameDatabaseContext
         return _realm.All<GameUser>().FirstOrDefault(u => u.Email == email);
     }
     
-    public GameUser? GetUserWithId(ObjectId id)
+    public GameUser? GetUserWithId(string id)
     {
         return _realm.All<GameUser>().FirstOrDefault(u => u.Id == id);
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using Bunkum.CustomHttpListener.Request;
+﻿using Bunkum.CustomHttpListener.Request;
 using Bunkum.HttpServer.Authentication;
 using Bunkum.HttpServer.Database;
 using K.O.R_Server.Database;
