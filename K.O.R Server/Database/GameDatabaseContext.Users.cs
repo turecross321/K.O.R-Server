@@ -89,7 +89,7 @@ public partial class GameDatabaseContext
     
     public GameUser? GetUserWithEmail(string email)
     {
-        return _realm.All<GameUser>().FirstOrDefault(u => u.Email == email.ToLower());
+        return _realm.All<GameUser>().FirstOrDefault(u => u.Email.Equals(email, StringComparison.OrdinalIgnoreCase));
     }
     
     public GameUser? GetUserWithId(string id)
@@ -99,6 +99,6 @@ public partial class GameDatabaseContext
         
     public GameUser? GetUserWithUsername(string username)
     {
-        return _realm.All<GameUser>().FirstOrDefault(u => u.Username == username);
+        return _realm.All<GameUser>().FirstOrDefault(u => u.Username.Equals(username, StringComparison.OrdinalIgnoreCase));
     }
 }
