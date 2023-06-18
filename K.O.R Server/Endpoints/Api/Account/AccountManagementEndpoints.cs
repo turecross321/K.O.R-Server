@@ -38,12 +38,12 @@ public partial class AccountManagementEndpoints : EndpointGroup
 
         // Check if username adheres to rules
         if (!UserHelper.IsUsernameLegal(body.Username))
-            return new Response("Username is not allowed.", ContentType.Plaintext, HttpStatusCode.Conflict);
+            return new Response("Invalid Username.", ContentType.Plaintext, HttpStatusCode.Conflict);
         
         // Check if username is already taken
         user = database.GetUserWithUsername(body.Username);
         if (user != null)
-            return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.Conflict);
+            return new Response("Username is not available.", ContentType.Plaintext, HttpStatusCode.Conflict);
             
 
         database.CreateUser(body);
