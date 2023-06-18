@@ -1,10 +1,10 @@
 ﻿using K.O.R_Server.Types;
 
-namespace K.O.R_Server.Responses;
+namespace K.O.R_Server.Responses.Users;
 
-public class UserResponse
+public class FullUserResponse
 {
-    public UserResponse(GameUser user)
+    public FullUserResponse(GameUser user)
     {
         Id = user.Id;
         Username = user.Username;

@@ -1,4 +1,5 @@
-﻿using K.O.R_Server.Types;
+﻿using K.O.R_Server.Responses.Users;
+using K.O.R_Server.Types;
 
 namespace K.O.R_Server.Responses;
 
@@ -8,10 +9,10 @@ public class SessionResponse
     {
         Id = session.Id;
         ExpiryDate = session.ExpiryDate;
-        User = new UserResponse(session.User);
+        FullUser = new FullUserResponse(session.User);
     }
 
     public string Id { get; }
     public DateTimeOffset ExpiryDate { get; }
-    public UserResponse User { get; }
+    public FullUserResponse FullUser { get; }
 }

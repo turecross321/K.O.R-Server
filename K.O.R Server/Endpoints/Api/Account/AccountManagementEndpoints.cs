@@ -22,7 +22,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
     [Authentication(false)]
     public Response Register(RequestContext context, GameDatabaseContext database, RegistrationRequest body, EmailService emailService)
     {
-        // Check if user has sent a valid mail address
+        // Check if mail address is valid
         if (MailAddress.TryCreate(body.Email, out MailAddress? _) == false)
             return new Response("Invalid Email.", ContentType.Plaintext, HttpStatusCode.BadRequest);
         
