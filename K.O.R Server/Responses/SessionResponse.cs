@@ -9,10 +9,10 @@ public class SessionResponse
     {
         Id = session.Id;
         ExpiryDate = session.ExpiryDate;
-        FullUser = new FullUserResponse(session.User);
+        User = new FullUserResponse(session.User);
     }
 
     public string Id { get; }
     public DateTimeOffset ExpiryDate { get; }
-    public FullUserResponse FullUser { get; }
+    public FullUserResponse User { get; }
 }

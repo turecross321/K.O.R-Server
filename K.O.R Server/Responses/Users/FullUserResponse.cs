@@ -8,14 +8,14 @@ public class FullUserResponse
     {
         Id = user.Id;
         Username = user.Username;
-        CreationDate = user.CreationDate;
+        CreationDate = user.CreationDate.ToUnixTimeSeconds();
         SelectedSkin = user.SelectedSkin;
         Statistics = new UserStatisticsResponse(user.Statistics);
     }
 
     public string Id { get; }
     public string Username { get; }
-    public DateTimeOffset CreationDate { get; }
+    public long CreationDate { get; }
     public int SelectedSkin { get; }
     public UserStatisticsResponse Statistics { get; }
 }

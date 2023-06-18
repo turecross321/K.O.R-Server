@@ -11,12 +11,12 @@ public class LeaderboardEntryResponse
         User = new BriefUserResponse(entry.User);
         Time = entry.Time;
         Score = entry.Score;
-        CreationDate = entry.CreationDate;
+        CreationDate = entry.CreationDate.ToUnixTimeSeconds();
     }
 
     public string Id { get; }
     public BriefUserResponse User { get; }
     public float Time { get; }
     public int Score { get; }
-    public DateTimeOffset CreationDate { get; }
+    public long CreationDate { get; }
 }

@@ -20,7 +20,7 @@ public partial class GameDatabaseContext
         };
 
         IEnumerable<GameSession> sessionsToDelete = _realm.All<GameSession>()
-            .Where(s => s.User == user)
+            .Where(s => s.User == user && s._SessionType == (int)type)
             .AsEnumerable()
             .SkipLast(SessionLimit - 1);
 
