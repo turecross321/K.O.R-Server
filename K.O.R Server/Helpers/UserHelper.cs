@@ -7,6 +7,6 @@ public static partial class UserHelper
         return UsernameRegex().IsMatch(username);
     }
 
-    [System.Text.RegularExpressions.GeneratedRegex("^[A-Za-z][A-Za-z0-9-_]{2,11}$")]
+    [System.Text.RegularExpressions.GeneratedRegex("^[A-Za-z][A-Za-z0-9-_]{2,15}$")]
     private static partial System.Text.RegularExpressions.Regex UsernameRegex();
 }
