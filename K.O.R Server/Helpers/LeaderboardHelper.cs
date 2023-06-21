@@ -26,6 +26,11 @@ public static class LeaderboardHelper
             entries = bestEntries.AsQueryable();
         }
 
+        if (filters.Before != null)
+            entries = entries.Where(e => e.CreationDate < filters.Before);
+        if (filters.After != null)
+            entries = entries.Where(e => e.CreationDate > filters.After);
+
         return entries;
     }
 

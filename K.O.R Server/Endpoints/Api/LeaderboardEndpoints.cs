@@ -32,11 +32,21 @@ public class LeaderboardEndpoints : EndpointGroup
         if (byUserId != null) byUser = database.GetUserWithId(byUserId);
         
         if (bool.TryParse(context.QueryString["onlyBest"], out bool onlyBest));
+        
+        string? beforeDateString = context.QueryString["before"];
+        DateTimeOffset? before = null;
+        if (beforeDateString != null) before = DateTimeOffset.Parse(beforeDateString);
+        
+        string? afterDateString = context.QueryString["after"];
+        DateTimeOffset? after = null;
+        if (afterDateString != null) after = DateTimeOffset.Parse(afterDateString);
 
         LeaderboardFilters filters = new()
         {
             ByUser = byUser,
-            OnlyBest = onlyBest
+            OnlyBest = onlyBest,
+            Before = before,
+            After = after
         };
         
         string? orderString = context.QueryString["orderBy"];
