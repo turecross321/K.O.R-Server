@@ -35,11 +35,11 @@ public class LeaderboardEndpoints : EndpointGroup
         
         string? beforeDateString = context.QueryString["before"];
         DateTimeOffset? before = null;
-        if (beforeDateString != null) before = DateTimeOffset.Parse(beforeDateString);
+        if (beforeDateString != null) before = DateTimeOffset.FromUnixTimeSeconds(long.Parse(beforeDateString));
         
         string? afterDateString = context.QueryString["after"];
         DateTimeOffset? after = null;
-        if (afterDateString != null) after = DateTimeOffset.Parse(afterDateString);
+        if (afterDateString != null) after = DateTimeOffset.FromUnixTimeSeconds(long.Parse(afterDateString));
 
         LeaderboardFilters filters = new()
         {
