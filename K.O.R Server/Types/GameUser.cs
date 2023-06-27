@@ -1,4 +1,5 @@
 ﻿using Bunkum.HttpServer.RateLimit;
+using K.O.R_Server.Types.Leaderboard;
 using Realms;
 // ReSharper disable UnassignedGetOnlyAutoProperty
 #pragma warning disable CS8618
@@ -15,6 +16,7 @@ public class GameUser : RealmObject, IRateLimitUser
     public int SelectedSkin { get; set; }
     public UserStatistics Statistics { get; set; }
     [Backlink(nameof(GameSession.User))] public IQueryable<GameSession> Sessions { get; }
+    [Backlink(nameof(LeaderboardEntry.User))] public IQueryable<LeaderboardEntry> LeaderboardEntries { get; }
 
     // Defined in authentication provider. Avoids Realm threading nonsense.
     public bool RateLimitUserIdIsEqual(object obj)

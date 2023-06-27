@@ -30,6 +30,7 @@ public partial class GameDatabaseContext
         _realm.Write(() =>
         {
             _realm.RemoveRange(user.Sessions);
+            _realm.RemoveRange(user.LeaderboardEntries);
             _realm.Remove(user);
         });
     }
