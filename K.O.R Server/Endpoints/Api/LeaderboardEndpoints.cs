@@ -20,7 +20,7 @@ public class LeaderboardEndpoints : EndpointGroup
         LeaderboardEntry entry = database.CreateLeaderboardEntry(user, body);
 
         int place = database.FindPlaceForEntry(entry);
-        if (place <= 5) webhook.AnnounceLeaderboardEntry(entry, place);
+        if (place <= 5 && place != -1) webhook.AnnounceLeaderboardEntry(entry, place);
 
         LeaderboardEntryResponse response = new(entry);
         return new Response(response, ContentType.Json, HttpStatusCode.Created);
