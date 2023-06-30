@@ -62,6 +62,7 @@ public class GameServer
     {
         ServerInstance.AddRateLimitService(new RateLimitSettings(30, 40, 0));
         ServerInstance.AddService<EmailService>();
+        ServerInstance.AddService<WebhookService>();
     }
 
     protected virtual void SetUpMiddlewares()
