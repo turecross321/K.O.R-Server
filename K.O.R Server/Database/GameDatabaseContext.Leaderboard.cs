@@ -26,6 +26,22 @@ public partial class GameDatabaseContext
         return entry;
     }
 
+    public int FindPlaceForEntry(LeaderboardEntry entry)
+    {
+        IQueryable<LeaderboardEntry> entries = _realm.All<LeaderboardEntry>();
+        IEnumerable<LeaderboardEntry> orderedEntries =
+            LeaderboardHelper.OrderLeaderboard(entries, LeaderboardOrderType.Score, true);
+
+        int i = 0;
+        foreach (LeaderboardEntry orderedEntry in orderedEntries)
+        {
+            if (orderedEntry.Id == entry.Id) return i + 1;
+            i++;
+        }
+
+        return -1;
+    }
+
     public (LeaderboardEntry[], int) GetLeaderboard(LeaderboardFilters filters, LeaderboardOrderType order, bool descending, int from, int count)
     {
         IQueryable<LeaderboardEntry> entries = _realm.All<LeaderboardEntry>();

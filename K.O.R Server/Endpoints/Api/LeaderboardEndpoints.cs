@@ -6,6 +6,7 @@ using Bunkum.HttpServer.Responses;
 using K.O.R_Server.Database;
 using K.O.R_Server.Requests;
 using K.O.R_Server.Responses.Leaderboard;
+using K.O.R_Server.Services;
 using K.O.R_Server.Types;
 using K.O.R_Server.Types.Leaderboard;
 
@@ -14,9 +15,14 @@ namespace K.O.R_Server.Endpoints.Api;
 public class LeaderboardEndpoints : EndpointGroup
 {
     [ApiEndpoint("leaderboard/create", Method.Post, ContentType.Json)]
-    public Response CreateLeaderboardEntry(RequestContext context, GameDatabaseContext database, CreateLeaderboardEntryRequest body, GameUser user)
+    public Response CreateLeaderboardEntry(RequestContext context, GameDatabaseContext database, CreateLeaderboardEntryRequest body, GameUser user, WebhookService webhook)
     {
-        LeaderboardEntryResponse response = new(database.CreateLeaderboardEntry(user, body));
+        LeaderboardEntry entry = database.CreateLeaderboardEntry(user, body);
+
+        int place = database.FindPlaceForEntry(entry);
+        if (place <= 5) webhook.AnnounceLeaderboardEntry(entry, place);
+
+        LeaderboardEntryResponse response = new(entry);
         return new Response(response, ContentType.Json, HttpStatusCode.Created);
     }
 
