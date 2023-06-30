@@ -26,11 +26,13 @@ public partial class GameDatabaseContext
         return entry;
     }
 
+    private readonly LeaderboardFilters _placeFilters = new() { OnlyBest = true };
+
     public int FindPlaceForEntry(LeaderboardEntry entry)
     {
         IQueryable<LeaderboardEntry> entries = _realm.All<LeaderboardEntry>();
-        IEnumerable<LeaderboardEntry> orderedEntries =
-            LeaderboardHelper.OrderLeaderboard(entries, LeaderboardOrderType.Score, true);
+        IQueryable<LeaderboardEntry> filteredEntries = LeaderboardHelper.FilterLeaderboard(entries, _placeFilters);
+        IQueryable<LeaderboardEntry> orderedEntries = LeaderboardHelper.OrderLeaderboard(filteredEntries, LeaderboardOrderType.Score, true);
 
         int i = 0;
         foreach (LeaderboardEntry orderedEntry in orderedEntries)
