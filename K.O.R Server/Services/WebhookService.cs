@@ -48,10 +48,12 @@ public class WebhookService : EndpointService
 
     public void AnnounceLeaderboardEntry(LeaderboardEntry entry, int place)
     {
+        TimeSpan time = TimeSpan.FromSeconds(entry.Time);
+        
         EmbedBuilder builder = new EmbedBuilder()
             .WithTimestamp(entry.CreationDate)
             .WithTitle($"{entry.User.Username} just achieved #{place}!")
-            .WithDescription($"{entry.Score} points in {entry.Time} seconds");
+            .WithDescription($"{entry.Score:N0} points in {time:mm\\:ss}");
 
         switch (place)
         {
