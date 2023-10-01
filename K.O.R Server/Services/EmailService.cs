@@ -1,7 +1,6 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Services;
+using Bunkum.Core.Services;
 using K.O.R_Server.Configuration;
 using NotEnoughLogs;
 
@@ -13,7 +12,7 @@ public class EmailService : EndpointService
     
     private readonly GameServerConfig _config;
     
-    internal EmailService(LoggerContainer<BunkumContext> logger, GameServerConfig config) : base(logger)
+    internal EmailService(Logger logger, GameServerConfig config) : base(logger)
     {
         _config = config;
         

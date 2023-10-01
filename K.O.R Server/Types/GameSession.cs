@@ -1,10 +1,10 @@
-﻿using Bunkum.HttpServer.Authentication;
+﻿using Bunkum.Core.Authentication;
 using Realms;
 #pragma warning disable CS8618
 
 namespace K.O.R_Server.Types;
 
-public class GameSession : RealmObject, IToken
+public class GameSession : RealmObject, IToken<GameUser>
 {
     [PrimaryKey] [Required] public string Id { get; init; }
     

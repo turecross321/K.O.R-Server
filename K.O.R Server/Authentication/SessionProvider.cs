@@ -1,13 +1,13 @@
-﻿using Bunkum.CustomHttpListener.Request;
-using Bunkum.HttpServer.Authentication;
-using Bunkum.HttpServer.Database;
+﻿using Bunkum.Listener.Request;
+using Bunkum.Core.Authentication;
+using Bunkum.Core.Database;
 using K.O.R_Server.Database;
 using K.O.R_Server.Types;
 using static K.O.R_Server.Helpers.SessionHelper;
 
 namespace K.O.R_Server.Authentication;
 
-public class SessionProvider : IAuthenticationProvider<GameUser, GameSession>
+public class SessionProvider : IAuthenticationProvider<GameSession>
 {
     public GameUser? AuthenticateUser(ListenerContext request, Lazy<IDatabaseContext> db)
     {
