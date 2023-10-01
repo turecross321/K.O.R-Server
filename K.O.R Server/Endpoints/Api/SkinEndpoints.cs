@@ -12,7 +12,7 @@ namespace K.O.R_Server.Endpoints.Api;
 
 public class SkinEndpoints : EndpointGroup
 {
-    [ApiEndpoint("skins/set", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("skins/set", HttpMethods.Post)]
     public Response SetSelectedSkin(RequestContext context, GameDatabaseContext database, GameUser user, SetSkinRequest body)
     {
         database.SetUserSelectedSkin(user, body.SelectedSkin);

@@ -15,7 +15,7 @@ namespace K.O.R_Server.Endpoints.Api;
 
 public class LeaderboardEndpoints : EndpointGroup
 {
-    [ApiEndpoint("leaderboard/create", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("leaderboard/create", HttpMethods.Post)]
     public Response CreateLeaderboardEntry(RequestContext context, GameDatabaseContext database, CreateLeaderboardEntryRequest body, GameUser user, WebhookService webhook)
     {
         LeaderboardEntry entry = database.CreateLeaderboardEntry(user, body);
@@ -27,7 +27,7 @@ public class LeaderboardEndpoints : EndpointGroup
         return new Response(response, ContentType.Json, HttpStatusCode.Created);
     }
 
-    [ApiEndpoint("leaderboard", ContentType.Json)]
+    [ApiEndpoint("leaderboard")]
     [Authentication(false)]
     public LeaderboardWrapper GetLeaderboard(RequestContext context, GameDatabaseContext database)
     {

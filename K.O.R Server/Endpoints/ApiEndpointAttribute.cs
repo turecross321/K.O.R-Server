@@ -7,11 +7,7 @@ public class ApiEndpointAttribute : HttpEndpointAttribute
 {
     public const string BaseRoute = "/api/v1/";
     
-    public ApiEndpointAttribute(string route, HttpMethods method = HttpMethods.Get, ContentType contentType = ContentType.Plaintext)
+    public ApiEndpointAttribute(string route, HttpMethods method = HttpMethods.Get, ContentType contentType = ContentType.Json)
         : base(BaseRoute + route, method, contentType)
-    {}
-
-    public ApiEndpointAttribute(string route, ContentType contentType, HttpMethods method = HttpMethods.Get) 
-        : base(BaseRoute + route, contentType, method)
     {}
 }

@@ -9,7 +9,7 @@ namespace K.O.R_Server.Endpoints.Api;
 
 public class UserEndpoints : EndpointGroup
 {
-    [ApiEndpoint("users/id/{id}", ContentType.Json)]
+    [ApiEndpoint("users/id/{id}")]
     [Authentication(false)]
     public FullUserResponse? GetUserWithId(RequestContext context, GameDatabaseContext database, string id)
     {
@@ -19,7 +19,7 @@ public class UserEndpoints : EndpointGroup
         return new FullUserResponse(user);
     }
     
-    [ApiEndpoint("users/username/{username}", ContentType.Json)]
+    [ApiEndpoint("users/username/{username}")]
     [Authentication(false)]
     public FullUserResponse? GetUserWithUsername(RequestContext context, GameDatabaseContext database, string username)
     {

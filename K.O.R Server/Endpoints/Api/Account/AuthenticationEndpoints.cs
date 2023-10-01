@@ -15,7 +15,7 @@ public class AuthenticationEndpoints : EndpointGroup
 {
     private readonly Response _invalidCredentialsResponse = new ("The email address or password was incorrect.", ContentType.Plaintext, HttpStatusCode.Forbidden);
     
-    [ApiEndpoint("account/logIn", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/logIn", HttpMethods.Post)]
     [Authentication(false)]
     public Response LogIn(RequestContext context, GameDatabaseContext database, AuthenticationRequest body)
     {

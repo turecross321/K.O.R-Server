@@ -19,7 +19,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
     [System.Text.RegularExpressions.GeneratedRegex("^[a-fA-F0-9]{128}$")]
     private static partial System.Text.RegularExpressions.Regex Sha512Regex();
 
-    [ApiEndpoint("account/register", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/register", HttpMethods.Post)]
     [Authentication(false)]
     public Response Register(RequestContext context, GameDatabaseContext database, RegistrationRequest body, EmailService emailService)
     {
@@ -51,7 +51,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setUsername", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/setUsername", HttpMethods.Post)]
     public Response SetUsername(RequestContext context, GameDatabaseContext database, GameUser user, SetUsernameRequest body)
     {
         if (!UserHelper.IsUsernameLegal(body.NewUsername)) return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.BadRequest);
@@ -66,7 +66,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendEmailSession", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/sendEmailSession", HttpMethods.Post)]
     public Response SendEmailSession(RequestContext context, GameDatabaseContext database, GameUser user, EmailService emailService)
     {
         string emailSessionId = GenerateEmailSessionId(database);
@@ -80,7 +80,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setEmail", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/setEmail", HttpMethods.Post)]
     public Response SetUserEmail(RequestContext context, GameDatabaseContext database, NewEmailRequest body, GameSession session, EmailService emailService)
     {
         GameUser user = session.User;
@@ -100,7 +100,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendPasswordSession", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/sendPasswordSession", HttpMethods.Post)]
     [Authentication(false)]
     public Response SendPasswordSession(RequestContext context, GameDatabaseContext database, NewPasswordSessionRequest body, EmailService emailService)
     {
@@ -119,7 +119,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setPassword", HttpMethods.Post, ContentType.Json)]
+    [ApiEndpoint("account/setPassword", HttpMethods.Post)]
     public Response SetUserPassword(RequestContext context, GameDatabaseContext database, SetPasswordRequest body, GameSession session)
     {
         GameUser user = session.User;
