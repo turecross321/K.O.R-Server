@@ -1,5 +1,5 @@
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Services;
+using Bunkum.Core;
+using Bunkum.Core.Services;
 using Discord;
 using Discord.Webhook;
 using K.O.R_Server.Configuration;
@@ -21,7 +21,7 @@ public class WebhookService : EndpointService
     private readonly GameServerConfig _config;
     private readonly DiscordWebhookClient? _client;
 
-    public WebhookService(LoggerContainer<BunkumContext> logger, GameServerConfig config) : base(logger)
+    public WebhookService(Logger logger, GameServerConfig config) : base(logger)
     {
         this._config = config;
         
@@ -41,7 +41,7 @@ public class WebhookService : EndpointService
             }
             catch(Exception e)
             {
-                this.Logger.LogWarning(BunkumContext.Service, $"Discord webhook failed to send: {e}");
+                this.Logger.LogWarning(BunkumCategory.Service, $"Discord webhook failed to send: {e}");
             }
         });
     }

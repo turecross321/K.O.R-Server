@@ -1,8 +1,9 @@
 ﻿using System.Net;
-using Bunkum.CustomHttpListener.Parsing;
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Endpoints;
-using Bunkum.HttpServer.Responses;
+using Bunkum.Core;
+using Bunkum.Core.Endpoints;
+using Bunkum.Core.Responses;
+using Bunkum.Listener.Protocol;
+using Bunkum.Protocols.Http;
 using K.O.R_Server.Database;
 using K.O.R_Server.Requests;
 using K.O.R_Server.Responses.Leaderboard;
@@ -14,7 +15,7 @@ namespace K.O.R_Server.Endpoints.Api;
 
 public class LeaderboardEndpoints : EndpointGroup
 {
-    [ApiEndpoint("leaderboard/create", Method.Post, ContentType.Json)]
+    [ApiEndpoint("leaderboard/create", HttpMethods.Post, ContentType.Json)]
     public Response CreateLeaderboardEntry(RequestContext context, GameDatabaseContext database, CreateLeaderboardEntryRequest body, GameUser user, WebhookService webhook)
     {
         LeaderboardEntry entry = database.CreateLeaderboardEntry(user, body);

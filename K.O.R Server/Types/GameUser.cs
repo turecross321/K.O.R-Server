@@ -1,4 +1,4 @@
-﻿using Bunkum.HttpServer.RateLimit;
+﻿using Bunkum.Core.RateLimit;
 using K.O.R_Server.Types.Leaderboard;
 using Realms;
 // ReSharper disable UnassignedGetOnlyAutoProperty

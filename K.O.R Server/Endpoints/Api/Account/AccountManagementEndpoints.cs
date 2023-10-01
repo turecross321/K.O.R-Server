@@ -1,9 +1,10 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using Bunkum.CustomHttpListener.Parsing;
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Endpoints;
-using Bunkum.HttpServer.Responses;
+using Bunkum.Core;
+using Bunkum.Core.Endpoints;
+using Bunkum.Core.Responses;
+using Bunkum.Listener.Protocol;
+using Bunkum.Protocols.Http;
 using K.O.R_Server.Database;
 using K.O.R_Server.Helpers;
 using K.O.R_Server.Requests.Account;
@@ -18,7 +19,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
     [System.Text.RegularExpressions.GeneratedRegex("^[a-fA-F0-9]{128}$")]
     private static partial System.Text.RegularExpressions.Regex Sha512Regex();
 
-    [ApiEndpoint("account/register", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/register", HttpMethods.Post, ContentType.Json)]
     [Authentication(false)]
     public Response Register(RequestContext context, GameDatabaseContext database, RegistrationRequest body, EmailService emailService)
     {
@@ -50,7 +51,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setUsername", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/setUsername", HttpMethods.Post, ContentType.Json)]
     public Response SetUsername(RequestContext context, GameDatabaseContext database, GameUser user, SetUsernameRequest body)
     {
         if (!UserHelper.IsUsernameLegal(body.NewUsername)) return new Response("Invalid username.", ContentType.Plaintext, HttpStatusCode.BadRequest);
@@ -65,7 +66,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendEmailSession", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/sendEmailSession", HttpMethods.Post, ContentType.Json)]
     public Response SendEmailSession(RequestContext context, GameDatabaseContext database, GameUser user, EmailService emailService)
     {
         string emailSessionId = GenerateEmailSessionId(database);
@@ -79,7 +80,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setEmail", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/setEmail", HttpMethods.Post, ContentType.Json)]
     public Response SetUserEmail(RequestContext context, GameDatabaseContext database, NewEmailRequest body, GameSession session, EmailService emailService)
     {
         GameUser user = session.User;
@@ -99,7 +100,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendPasswordSession", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/sendPasswordSession", HttpMethods.Post, ContentType.Json)]
     [Authentication(false)]
     public Response SendPasswordSession(RequestContext context, GameDatabaseContext database, NewPasswordSessionRequest body, EmailService emailService)
     {
@@ -118,7 +119,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/setPassword", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/setPassword", HttpMethods.Post, ContentType.Json)]
     public Response SetUserPassword(RequestContext context, GameDatabaseContext database, SetPasswordRequest body, GameSession session)
     {
         GameUser user = session.User;
@@ -133,7 +134,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
 
-    [ApiEndpoint("account/sendRemovalSession", Method.Post)]
+    [ApiEndpoint("account/sendRemovalSession", HttpMethods.Post)]
     public Response SendUserRemovalSession(RequestContext context, GameDatabaseContext database, GameUser user, GameSession session, EmailService emailService)
     {
         string removalSessionId = GenerateAccountRemovalSessionId(database);
@@ -148,7 +149,7 @@ public partial class AccountManagementEndpoints : EndpointGroup
         return HttpStatusCode.Created;
     }
     
-    [ApiEndpoint("account/remove", Method.Post)]
+    [ApiEndpoint("account/remove", HttpMethods.Post)]
     public Response RemoveAccount(RequestContext context, GameDatabaseContext database, GameUser user)
     {
         database.RemoveUser(user);

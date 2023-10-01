@@ -1,8 +1,9 @@
 ﻿using System.Net;
-using Bunkum.CustomHttpListener.Parsing;
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Endpoints;
-using Bunkum.HttpServer.Responses;
+using Bunkum.Core;
+using Bunkum.Core.Endpoints;
+using Bunkum.Core.Responses;
+using Bunkum.Listener.Protocol;
+using Bunkum.Protocols.Http;
 using K.O.R_Server.Database;
 using K.O.R_Server.Requests.Account;
 using K.O.R_Server.Responses;
@@ -14,7 +15,7 @@ public class AuthenticationEndpoints : EndpointGroup
 {
     private readonly Response _invalidCredentialsResponse = new ("The email address or password was incorrect.", ContentType.Plaintext, HttpStatusCode.Forbidden);
     
-    [ApiEndpoint("account/logIn", Method.Post, ContentType.Json)]
+    [ApiEndpoint("account/logIn", HttpMethods.Post, ContentType.Json)]
     [Authentication(false)]
     public Response LogIn(RequestContext context, GameDatabaseContext database, AuthenticationRequest body)
     {
@@ -27,7 +28,7 @@ public class AuthenticationEndpoints : EndpointGroup
         return new Response(new SessionResponse(session), ContentType.Json, HttpStatusCode.Created);
     }
 
-    [ApiEndpoint("account/logOut", Method.Post)]
+    [ApiEndpoint("account/logOut", HttpMethods.Post)]
     public Response LogOut(RequestContext context, GameDatabaseContext database, GameSession token)
     {
         database.RemoveSession(token);

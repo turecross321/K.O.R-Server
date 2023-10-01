@@ -1,8 +1,7 @@
 ﻿using System.Reflection;
-using Bunkum.CustomHttpListener;
-using Bunkum.HttpServer;
-using Bunkum.HttpServer.Authentication;
-using Bunkum.HttpServer.RateLimit;
+using Bunkum.Core.Authentication;
+using Bunkum.Core.RateLimit;
+using Bunkum.Protocols.Http;
 using K.O.R_Server.Authentication;
 using K.O.R_Server.Configuration;
 using K.O.R_Server.Database;
@@ -19,7 +18,7 @@ public class GameServer
 
     public GameServer(BunkumHttpListener? listener = null,
         GameDatabaseProvider? databaseProvider = null,
-        IAuthenticationProvider<GameUser, GameSession>? authProvider = null)
+        IAuthenticationProvider<GameSession>? authProvider = null)
     {
         databaseProvider ??= new GameDatabaseProvider();
         authProvider ??= new SessionProvider();
@@ -60,7 +59,7 @@ public class GameServer
     
     protected virtual void SetUpServices()
     {
-        ServerInstance.AddRateLimitService(new RateLimitSettings(30, 40, 0));
+        ServerInstance.AddRateLimitService(new RateLimitSettings(30, 40, 0, "global"));
         ServerInstance.AddService<EmailService>();
         ServerInstance.AddService<WebhookService>();
     }
