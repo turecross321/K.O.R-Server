@@ -7,7 +7,7 @@ public class ApiEndpointAttribute : HttpEndpointAttribute
 {
     public const string BaseRoute = "/api/v1/";
     
-    public ApiEndpointAttribute(string route, HttpMethods method = HttpMethods.Get, ContentType contentType = ContentType.Json)
+    public ApiEndpointAttribute(string route, HttpMethods method = HttpMethods.Get, string contentType = Bunkum.Listener.Protocol.ContentType.Json)
         : base(BaseRoute + route, method, contentType)
     {}
 }
